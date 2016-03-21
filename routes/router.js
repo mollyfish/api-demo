@@ -1,8 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var Student = require(__dirname + '/models/student');
-var Lecture = require(__dirname + '/models/lecture');
-var handleError = require(__dirname + '/handleServerError');
+var Student = require(__dirname + '/../models/student');
+var Lecture = require(__dirname + '/../models/lecture');
+var handleError = require(__dirname + '/../handleServerError');
 
 var router = module.exports = exports = express.Router();
 
