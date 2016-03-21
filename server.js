@@ -1,19 +1,19 @@
 var mongoose = require('mongoose');
 var express = require('express'); 
 var app = express();
-var workoutsRouter = require(__dirname + 'router');
+var lecturesRouter = require(__dirname + '/routes/router');
 // var fs = require('fs');
 // var path = require('path');
 // var bodyParser = require('body-parser');
 // var exec = require('child_process').exec; 
 var port = 8080 || process.env.PORT; 
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/workouts_dev');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/lectures_dev');
 
 app.use(express.static(__dirname + '/public'));
 // app.use(bodyParser());
 
-app.use('/api', workoutsRouter);
+app.use('/api', lecturesRouter);
 // app.get('/cpuinfo', function(req, res) {
 // 	console.log('i hear you');
 // 	exec(path.join(__dirname + '/get-cpu'));
