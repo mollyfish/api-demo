@@ -12,7 +12,37 @@
         <!-- <link rel="stylesheet" href="css/main.css"> -->
     </head>
     <body>
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <h1>An API demo</h1>
+        <h3>Posting Items</h3>
+        <ul>
+        <li><p>To post new <strong>lecture</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/lectures post '{"title":"lecture title", "subject":"lecture subject", "attendance":"number"}'</pre></p></li>
+        <li><p>To post new <strong>student</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/students post '{"name":"student name", "attendance":"number"}'</pre></p></li>
+        </ul>
+        <h3>Getting Items</h3>
+        <ul>
+        <li><p>To get <strong>lecture</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/lectures get</pre></p></li>
+        <li><p>To get <strong>student</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/students get</pre></p></li>
+        </ul>
+        <h3>Editing Items</h3>
+        <ul>
+        <li><p>To edit <strong>lecture</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/lectures/lectureID put '{"data":"data"}'</pre></p></li>
+        <li><p>To edit <strong>student</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/students/studentID put '{"data":"data"}'</pre></p></li>
+        </ul>
+        <h3>Deleting Items</h3>
+        <ul>
+        <li><p>To delete <strong>lecture</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/lectures/lectureID delete</pre></p></li>
+        <li><p>To delete <strong>student</strong> data, enter the following in the command line:</p>
+        <p><pre>superagent localhost:8080/api/students/studentID delete</pre></p></li>
+        </ul>
+
+
         <!-- // <script src="js/main.js"></script> -->
     </body>
 </html>

@@ -1,28 +1,114 @@
 var mongoose = require('mongoose');
 var express = require('express'); 
+var bodyParser = require('body-parser');
 var app = express();
-var lecturesRouter = require(__dirname + '/routes/router');
-// var fs = require('fs');
-// var path = require('path');
-// var bodyParser = require('body-parser');
-// var exec = require('child_process').exec; 
+
+function handleError(err, res) { 
+  console.log(err); 
+  res.status(500).json({msg: 'server error'}); 
+}; 
+
+// DATABASE MODELS
+var studentSchema = new mongoose.Schema({
+	name: String,
+	attendance: Number
+});
+var lectureSchema = new mongoose.Schema({
+	title: String,
+	subject: String,
+	attendance: Number
+});
+var Student = mongoose.model('Student', studentSchema);
+var Lecture = mongoose.model('Lecture', lectureSchema);
+
+// ROUTES
+var classroomRouter = express.Router();
+
+// LECTURE ROUTES
+classroomRouter.get('/lectures', function(req, res) {
+  Lecture.find({}, function(err, data) {
+    if (err) return handleError(err, res);
+
+    res.json(data);
+  });
+});
+
+// superagent localhost:8080/lectures post '{"title":"Chemical bonds", "subject":"ionic vs covalent bonding", "attendance":"8"}'
+
+classroomRouter.post('/lectures', bodyParser.json(), function(req, res) {
+	console.log('hello from post');
+  var newLecture = new Lecture(req.body);
+  newLecture.save(function(err, data) {
+    if (err) {
+    	return handleError(err, res);
+    } else {
+    	console.log(data);
+    	res.json(data);
+  	}
+  });
+});
+
+classroomRouter.put('/lectures/:id', bodyParser.json(), function(req, res) {
+  var lectureData = req.body;
+  delete lectureData._id;
+  Lecture.update({_id: req.params.id}, lectureData, function(err) {
+    if (err) return handleError(err, res);
+
+    res.json({msg: 'success!'});
+  });
+});
+
+classroomRouter.delete('/lectures/:id', function(req, res) {
+  Lecture.remove({_id: req.params.id}, function(err) {
+    if (err) return handleError(err, res);
+
+    res.json({msg: 'success!'});
+  });
+});
+
+// STUDENT ROUTES
+classroomRouter.get('/students', function(req, res) {
+  Student.find({}, function(err, data) {
+    if (err) return handleError(err, res);
+
+    res.json(data);
+  });
+});
+
+classroomRouter.post('/students', bodyParser.json(), function(req, res) {
+  var newStudent = new Student(req.body);
+  newStudent.save(function(err, data) {
+    if (err) return handleError(err, res);
+
+    res.json(data);
+  });
+});
+
+classroomRouter.put('/students/:id', bodyParser.json(), function(req, res) {
+  var studentData = req.body;
+  delete studentData._id;
+  Student.update({_id: req.params.id}, studentData, function(err) {
+    if (err) return handleError(err, res);
+
+    res.json({msg: 'success!'});
+  });
+});
+
+classroomRouter.delete('/students/:id', function(req, res) {
+  Student.remove({_id: req.params.id}, function(err) {
+    if (err) return handleError(err, res);
+
+    res.json({msg: 'success!'});
+  });
+});
+
 var port = 8080 || process.env.PORT; 
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/lectures_dev');
 
 app.use(express.static(__dirname + '/public'));
-// app.use(bodyParser());
 
-app.use('/api', lecturesRouter);
-// app.get('/cpuinfo', function(req, res) {
-// 	console.log('i hear you');
-// 	exec(path.join(__dirname + '/get-cpu'));
-// 	exec(path.join(__dirname + '/send-json'));
-//   fs.readFile(path.join(__dirname + '/public/data.json'), function(err, data){
-//   	console.log("packet");
-//   	res.send(data);
-//   });
-// });
+app.use('/api', classroomRouter);
 
 app.listen(port, function() { 
   console.log('server up on port ' + port); 
