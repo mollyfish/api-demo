@@ -9,14 +9,17 @@ function handleError(err, res) {
 }; 
 
 // DATABASE MODELS
+
 var studentSchema = new mongoose.Schema({
 	name: String,
-	attendance: Number
+	attendance: Number,
+	attended: [{type: mongoose.Schema.ObjectId, ref: 'lectureSchema'}]
 });
 var lectureSchema = new mongoose.Schema({
 	title: String,
 	subject: String,
-	attendance: Number
+	attendance: Number,
+	attendees: [{type: mongoose.Schema.ObjectId, ref: 'studentSchema'}] 
 });
 var Student = mongoose.model('Student', studentSchema);
 var Lecture = mongoose.model('Lecture', lectureSchema);
@@ -36,13 +39,11 @@ classroomRouter.get('/lectures', function(req, res) {
 // superagent localhost:8080/lectures post '{"title":"Chemical bonds", "subject":"ionic vs covalent bonding", "attendance":"8"}'
 
 classroomRouter.post('/lectures', bodyParser.json(), function(req, res) {
-	console.log('hello from post');
   var newLecture = new Lecture(req.body);
   newLecture.save(function(err, data) {
     if (err) {
     	return handleError(err, res);
     } else {
-    	console.log(data);
     	res.json(data);
   	}
   });
