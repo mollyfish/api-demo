@@ -12,14 +12,12 @@ function handleError(err, res) {
 
 var studentSchema = new mongoose.Schema({
 	name: String,
-	attendance: Number,
-	attended: [{type: mongoose.Schema.ObjectId, ref: 'lectureSchema'}]
+	attended: [{type: mongoose.Schema.ObjectId}]
 });
 var lectureSchema = new mongoose.Schema({
 	title: String,
 	subject: String,
-	attendance: Number,
-	attendees: [{type: mongoose.Schema.ObjectId, ref: 'studentSchema'}] 
+	attendedBy: [{type: mongoose.Schema.ObjectId}] 
 });
 var Student = mongoose.model('Student', studentSchema);
 var Lecture = mongoose.model('Lecture', lectureSchema);
@@ -30,9 +28,26 @@ var classroomRouter = express.Router();
 // LECTURE ROUTES
 classroomRouter.get('/lectures', function(req, res) {
   Lecture.find({}, function(err, data) {
-    if (err) return handleError(err, res);
+    if (err) {
+      return handleError(err, res);
+    } else {
+      res.json(data);  
+    }
+  });
+});
 
-    res.json(data);
+classroomRouter.get('/lectures/:title', function(req, res) {
+  
+  Lecture.findOne({'title': req.params.title}, function(err, data) {
+    if (err) {
+      return handleError(err, res);
+    } else {
+
+      console.log(data.attendedBy[0].name);
+
+      var pretty = "subject: " + data.subject + ", attendees: " + data.attendedBy + ".";
+      res.json(pretty);  
+    }
   });
 });
 
