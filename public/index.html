@@ -8,8 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- // <script src="js/main.js"></script> -->
     </head>
-    <body>
+    <body id="body">
         <h1>An API demo</h1>
         <h3>Posting Items</h3>
         <ul>
@@ -17,7 +18,7 @@
 
 
         <li><p>To post new <strong>lecture</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/lectures post '{"title":"lecture title", "subject":"lecture subject", "attendance":"number", "attendees":["ID", "ID" ... ]}'</pre></p></li>
+        <p><pre>superagent localhost:8080/api/lectures post '{"title":"lecture title", "subject":"lecture subject", "attendedBy":["ID", "ID" ... ]}'</pre></p></li>
         <li><p>To post new <strong>student</strong> data, enter the following in the command line:</p>
         <p><pre>superagent localhost:8080/api/students post '{"name":"student name", "attendance":"number", "attended":["ID", "ID" ... ]}'</pre></p></li>
         </ul>
@@ -44,6 +45,6 @@
         </ul>
 
 
-        <!-- // <script src="js/main.js"></script> -->
+        
     </body>
 </html>

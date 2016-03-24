@@ -12,17 +12,17 @@ function handleError(err, res) {
 
 var studentSchema = new mongoose.Schema({
 	name: String,
-	attended: [{type: mongoose.Schema.ObjectId}]
+	attended: [{type: mongoose.Schema.ObjectId, 'ref' : lectureSchema}]
 });
 var lectureSchema = new mongoose.Schema({
 	title: String,
 	subject: String,
-	attendedBy: [{type: mongoose.Schema.ObjectId}] 
+	attendedBy: [{type: mongoose.Schema.ObjectId, 'ref' : studentSchema}] 
 });
 var Student = mongoose.model('Student', studentSchema);
 var Lecture = mongoose.model('Lecture', lectureSchema);
 
-// ROUTES
+// ROUTE
 var classroomRouter = express.Router();
 
 // LECTURE ROUTES
@@ -36,16 +36,25 @@ classroomRouter.get('/lectures', function(req, res) {
   });
 });
 
-classroomRouter.get('/lectures/:title', function(req, res) {
-  
-  Lecture.findOne({'title': req.params.title}, function(err, data) {
+classroomRouter.get('/lectures/:id/subject', function(req, res) {
+  var pretty = "";
+  Lecture.findOne({'_id': req.params.id}, function(err, data) {
     if (err) {
       return handleError(err, res);
     } else {
+      pretty = "title: " + data.title + ", subject: " + data.subject;
+      res.json(pretty);  
+    }
+  });
+});
 
-      console.log(data.attendedBy[0].name);
-
-      var pretty = "subject: " + data.subject + ", attendees: " + data.attendedBy + ".";
+classroomRouter.get('/lectures/:id/attendance', function(req, res) {
+  var pretty = "";
+  Lecture.findOne({'_id': req.params.id}, function(err, data) {
+    if (err) {
+      return handleError(err, res);
+    } else {
+      pretty = "attendance: " + data.attendedBy;
       res.json(pretty);  
     }
   });
@@ -86,10 +95,33 @@ classroomRouter.delete('/lectures/:id', function(req, res) {
 classroomRouter.get('/students', function(req, res) {
   Student.find({}, function(err, data) {
     if (err) return handleError(err, res);
-
     res.json(data);
   });
 });
+
+classroomRouter.get('/students/:id/name', function(req, res) {
+  var pretty = "";
+  Student.findOne({'_id': req.params.id}, function(err, data) {
+    if (err) {
+      return handleError(err, res);
+    } else {
+      pretty = "name: " + data.name;
+      res.json(pretty);  
+    }
+  });
+});
+
+classroomRouter.get('/students/:id/attendance', function(req, res) {
+  var pretty = "";
+  Student.findOne({'_id': req.params.id}, function(err, data) {
+    if (err) {
+      return handleError(err, res);
+    } else {
+      pretty = "lectures attended: " + data.attended;
+      res.json(pretty);  
+    }
+  });
+})
 
 classroomRouter.post('/students', bodyParser.json(), function(req, res) {
   var newStudent = new Student(req.body);
