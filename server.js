@@ -31,7 +31,8 @@ classroomRouter.get('/lectures', function(req, res) {
     if (err) {
       return handleError(err, res);
     } else {
-      res.json(data);  
+      res.send(JSON.stringify(data));
+      // res.json(data);  
     }
   });
 });
@@ -54,8 +55,8 @@ classroomRouter.get('/lectures/:id/attendance', function(req, res) {
     if (err) {
       return handleError(err, res);
     } else {
-      pretty = "attendance: " + data.attendedBy;
-      res.json(pretty);  
+      res.json(data.attendedBy);
+      // res.json(pretty);  
     }
   });
 });
