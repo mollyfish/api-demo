@@ -14,34 +14,82 @@
         <h1>An API demo</h1>
         <h3>Posting Items</h3>
         <ul>
-
-
-
-        <li><p>To post new <strong>lecture</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/lectures post '{"title":"lecture title", "subject":"lecture subject", "attendedBy":["ID", "ID" ... ]}'</pre></p></li>
-        <li><p>To post new <strong>student</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/students post '{"name":"student name", "attendance":"number", "attended":["ID", "ID" ... ]}'</pre></p></li>
+            <li>
+                <p>To post new <strong>lecture</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/lectures post '{"title":"lecture title", "subject":"lecture subject", "attendedBy":["student ID", "student ID" ... ]}'</pre></p>
+            </li>
+            <li>
+                <p>To post new <strong>student</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students post '{"name":"student name", "attended":["lecture ID", "lecture ID" ... ]}'</pre></p>
+            </li>
         </ul>
-        <h3>Getting Items</h3>
+        <h3>Getting Lecture Data</h3>
         <ul>
-        <li><p>To get <strong>lecture</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/lectures get</pre></p></li>
-        <li><p>To get <strong>student</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/students get</pre></p></li>
+            <li>
+                <p>To get <strong>all lecture</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/lectures get</pre></p>
+                <p>Or enter this URL into the browser:</p>
+                <p>localhost:8080/api/lectures</p>
+            </li>
+            <li>
+                <p>To get the <strong>title and subject</strong> of a <strong>certain lecture</strong>, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/lectures/:id/subject get</pre></p>
+                <p>Or enter this URL into the browser:</p>
+                <p>localhost:8080/api/lectures/:id/subject</p>
+            </li>
+            <li>
+                <p>To get the <strong>attendance</strong> of a <strong>certain lecture</strong>, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/lectures/:id/attendance get</pre></p>
+                <p>Or enter this URL into the browser:</p>
+                <p>localhost:8080/api/lectures/:id/attendance</p>
+            </li>
+            <li>
+                <p>To get <strong>student</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students get</pre></p>
+            </li>
+        </ul>
+        <h3>Getting Student Data</h3>
+        <ul>
+            <li>
+                <p>To get <strong>all student</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students get</pre></p>
+                <p>Or enter this URL into the browser:</p>
+                <p>localhost:8080/api/students</p>
+            </li>
+            <li>
+                <p>To get the <strong>name</strong> of a <strong>certain student</strong>, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students/:id/name get</pre></p>
+                <p>Or enter this URL into the browser:</p>
+                <p>localhost:8080/api/students/:id/name</p>
+            </li>
+            <li>
+                <p>To get the <strong>attendance</strong> of a <strong>certain student</strong>, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students/:id/attendance get</pre></p>
+                <p>Or enter this URL into the browser:</p>
+                <p>localhost:8080/api/students/:id/attendance</p>
+            </li>
         </ul>
         <h3>Editing Items</h3>
         <ul>
-        <li><p>To edit <strong>lecture</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/lectures/lectureID put '{"data":"data"}'</pre></p></li>
-        <li><p>To edit <strong>student</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/students/studentID put '{"data":"data"}'</pre></p></li>
+            <li>
+                <p>To edit <strong>lecture</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/lectures/lectureID put '{"data":"data"}'</pre></p>
+            </li>
+            <li>
+                <p>To edit <strong>student</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students/studentID put '{"data":"data"}'</pre></p>
+            </li>
         </ul>
         <h3>Deleting Items</h3>
         <ul>
-        <li><p>To delete <strong>lecture</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/lectures/lectureID delete</pre></p></li>
-        <li><p>To delete <strong>student</strong> data, enter the following in the command line:</p>
-        <p><pre>superagent localhost:8080/api/students/studentID delete</pre></p></li>
+            <li>
+                <p>To delete <strong>lecture</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/lectures/lectureID delete</pre></p>
+            </li>
+            <li>
+                <p>To delete <strong>student</strong> data, enter the following in the command line:</p>
+                <p><pre>superagent localhost:8080/api/students/studentID delete</pre></p>
+            </li>
         </ul>
 
 
